@@ -3,11 +3,11 @@ import { NavController } from 'ionic-angular';
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'page-contact',
-  templateUrl: 'contact.html'
+  selector: 'page-results',
+  templateUrl: 'results.html'
 })
 
-export class ContactPage {
+export class ResultsPage {
 
     @ViewChild('barCanvas') barCanvas;
     @ViewChild('doughnutCanvas') doughnutCanvas;

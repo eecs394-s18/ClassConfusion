@@ -25678,10 +25678,10 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
-.ios page-contacts .scroll-content, .md page-contacts .scroll-content {
+.ios page-results .scroll-content, .md page-results .scroll-content {
   background-color: #f4f4f4;
 }
 
-.ios page-contacts ion-card-header, .md page-contacts ion-card-header {
+.ios page-results ion-card-header, .md page-results ion-card-header {
   font-weight: bold;
 }
