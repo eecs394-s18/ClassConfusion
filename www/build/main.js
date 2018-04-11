@@ -109,9 +109,19 @@ var TopicsPage = /** @class */ (function () {
         // });
     }
     TopicsPage.prototype.addTopic = function () {
-        if (this.newTopic) {
-            this.firebaseProvider.addTopic(this.newTopic);
-        }
+        var _this = this;
+        this.firebaseProvider.getTopics().subscribe(function (snapshots) {
+            if (_this.newTopic.length < 1) {
+                return;
+            }
+            var topicNames = [];
+            snapshots.forEach(function (snapshot) {
+                topicNames.push(snapshot.name);
+            });
+            if (topicNames.indexOf(_this.newTopic) <= -1) {
+                _this.firebaseProvider.addTopic(_this.newTopic);
+            }
+        });
     };
     TopicsPage.prototype.removeTopic = function (id) {
         this.firebaseProvider.removeTopic(id);

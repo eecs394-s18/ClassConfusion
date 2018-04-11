@@ -24,10 +24,18 @@ export class TopicsPage {
   }
 
   addTopic() {
-    if (this.newTopic)
+    this.firebaseProvider.getTopics().subscribe(snapshots =>
     {
-      this.firebaseProvider.addTopic(this.newTopic);
-    }
+      if (this.newTopic.length < 1) { return; }
+      let topicNames = [];
+      snapshots.forEach(snapshot => {
+          topicNames.push(snapshot.name);
+      });
+      if (topicNames.indexOf(this.newTopic) <= -1)
+      {
+        this.firebaseProvider.addTopic(this.newTopic);
+      }
+    });
   }
  
   removeTopic(id) {
