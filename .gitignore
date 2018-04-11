@@ -1,5 +1,5 @@
-node_modules
-www
+node_modules/
+www/
 .idea
 .temp
 .sass-cache
