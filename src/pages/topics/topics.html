@@ -21,12 +21,17 @@
   <ion-list>
     <ion-list *ngFor="let topic of topicList | async">
       <ion-item>
-        <ion-label>{{ topic.$value }}</ion-label>
-        <ion-checkbox [(ngModel)]="topic.value"></ion-checkbox>
+        <ion-label>{{topic.name}}</ion-label>
+        <ion-checkbox 
+          [(ngModel)]="topic.checked"
+          (ionChange)="updateVote(topic);">
+        </ion-checkbox>
       </ion-item>
+
       <ion-item-options side="right">
         <button ion-button color="danger" icon-only (click)="removeTopic(topic.$key)"><ion-icon name="trash"></ion-icon></button>
       </ion-item-options>
+      
     </ion-list>
   </ion-list>
 </ion-content>

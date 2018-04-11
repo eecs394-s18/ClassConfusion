@@ -99,17 +99,34 @@ var TopicsPage = /** @class */ (function () {
         this.navCtrl = navCtrl;
         this.firebaseProvider = firebaseProvider;
         this.newTopic = '';
-        this.topicList = this.firebaseProvider.getItems();
+        this.topicList = this.firebaseProvider.getTopics();
+        // get all topics from firebase for testing purposes:
+        // this.firebaseProvider.getTopics().subscribe(snapshots =>
+        // {
+        //   snapshots.forEach(snapshot => {
+        //       // console.log(snapshot);
+        //   });
+        // });
     }
     TopicsPage.prototype.addTopic = function () {
-        this.firebaseProvider.addItem(this.newTopic);
+        if (this.newTopic) {
+            this.firebaseProvider.addTopic(this.newTopic);
+        }
     };
     TopicsPage.prototype.removeTopic = function (id) {
-        this.firebaseProvider.removeItem(id);
+        this.firebaseProvider.removeTopic(id);
+    };
+    TopicsPage.prototype.updateVote = function (topic) {
+        if (topic.checked) {
+            console.log("Add a vote for " + topic.name);
+        }
+        else {
+            console.log("Remove a vote for " + topic.name);
+        }
     };
     TopicsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-topics',template:/*ion-inline-start:"/Users/bscharf/Documents/School/EECS 394/ClassConfusion/src/pages/topics/topics.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Topics\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col col-9>\n      <ion-item>\n        <ion-input type="text" [(ngModel)]="newTopic" placeholder="New Topic"></ion-input>\n      </ion-item>\n    </ion-col>\n    <ion-col>\n      <button ion-button (click)="addTopic()">Add!</button>\n    </ion-col>\n  </ion-row>\n \n  <ion-list>\n    <ion-item-sliding *ngFor="let topic of topicList | async">\n      <ion-item>\n        {{ topic.$value }}\n      </ion-item>\n      <ion-item-options side="right">\n        <button ion-button color="danger" icon-only (click)="removeTopic(topic.$key)"><ion-icon name="trash"></ion-icon></button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/bscharf/Documents/School/EECS 394/ClassConfusion/src/pages/topics/topics.html"*/
+            selector: 'page-topics',template:/*ion-inline-start:"/Users/bscharf/Documents/School/EECS 394/ClassConfusion/src/pages/topics/topics.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Topics\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col col-9>\n      <ion-item>\n        <ion-input type="text" [(ngModel)]="newTopic" placeholder="New Topic"></ion-input>\n      </ion-item>\n    </ion-col>\n    <ion-col>\n      <button ion-button (click)="addTopic()">Add!</button>\n    </ion-col>\n  </ion-row>\n\n  <ion-list>\n    <ion-list *ngFor="let topic of topicList | async">\n      <ion-item>\n        <ion-label>{{topic.name}}</ion-label>\n        <ion-checkbox \n          [(ngModel)]="topic.checked"\n          (ionChange)="updateVote(topic);">\n        </ion-checkbox>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button color="danger" icon-only (click)="removeTopic(topic.$key)"><ion-icon name="trash"></ion-icon></button>\n      </ion-item-options>\n      \n    </ion-list>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/bscharf/Documents/School/EECS 394/ClassConfusion/src/pages/topics/topics.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__providers_firebase_firebase__["a" /* FirebaseProvider */]])
     ], TopicsPage);
@@ -138,24 +155,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-/*
-  Generated class for the FirebaseProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 var FirebaseProvider = /** @class */ (function () {
     function FirebaseProvider(afd) {
         this.afd = afd;
     }
-    FirebaseProvider.prototype.getItems = function () {
-        return this.afd.list('/topics/');
+    FirebaseProvider.prototype.getTopics = function () {
+        return this.afd.list('/topics');
     };
-    FirebaseProvider.prototype.addItem = function (name) {
-        this.afd.list('/topics/').push(name);
+    FirebaseProvider.prototype.addTopic = function (name) {
+        this.afd.list('/topics').set(name, {
+            name: name,
+            voteCount: 1,
+            commentList: []
+        });
     };
-    FirebaseProvider.prototype.removeItem = function (id) {
-        this.afd.list('/topics/').remove(id);
+    FirebaseProvider.prototype.removeTopic = function (id) {
+        this.afd.list('/topics').remove(id);
     };
     FirebaseProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
