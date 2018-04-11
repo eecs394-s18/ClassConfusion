@@ -17,15 +17,16 @@
       <button ion-button (click)="addTopic()">Add!</button>
     </ion-col>
   </ion-row>
- 
+
   <ion-list>
-    <ion-item-sliding *ngFor="let topic of topicList | async">
+    <ion-list *ngFor="let topic of topicList | async">
       <ion-item>
-        {{ topic.$value }}
+        <ion-label>{{ topic.$value }}</ion-label>
+        <ion-checkbox [(ngModel)]="topic.value"></ion-checkbox>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="danger" icon-only (click)="removeTopic(topic.$key)"><ion-icon name="trash"></ion-icon></button>
       </ion-item-options>
-    </ion-item-sliding>
+    </ion-list>
   </ion-list>
 </ion-content>
