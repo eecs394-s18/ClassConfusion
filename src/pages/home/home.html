@@ -5,9 +5,13 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to ClassConfusion!</h2>
-  <p>
-    You are currently enrolled in the following classes which are using ClassConfusion: (list of classes to click on/add a new class option)
-  </p>
-
-</ion-content>
+    <ion-list>
+        <h2>Welcome to ClassConfusion!</h2>
+        <p>
+          You are currently enrolled in the following classes which are using ClassConfusion: (list of classes to click on/add a new class option)
+        </p>
+      <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+          {{ item }}
+      </button> 
+    </ion-list>
+  </ion-content>
