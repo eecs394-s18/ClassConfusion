@@ -8,6 +8,8 @@ import { ResultsPage } from '../pages/results/results';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { ClassListComponent } from '../components/class-list/class-list';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -17,7 +19,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TopicsPage,
     ResultsPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    ClassListComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TopicsPage,
     ResultsPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    ClassListComponent
   ],
   providers: [
     StatusBar,
