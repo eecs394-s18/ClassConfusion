@@ -99,13 +99,13 @@ var TopicsPage = /** @class */ (function () {
         this.navCtrl = navCtrl;
         this.firebaseProvider = firebaseProvider;
         this.newTopic = '';
-        this.topicList = this.firebaseProvider.getTopics();
+        this.topicList = this.firebaseProvider.getItems();
     }
     TopicsPage.prototype.addTopic = function () {
-        this.firebaseProvider.addTopic(this.newTopic);
+        this.firebaseProvider.addItem(this.newTopic);
     };
     TopicsPage.prototype.removeTopic = function (id) {
-        this.firebaseProvider.removeTopic(id);
+        this.firebaseProvider.removeItem(id);
     };
     TopicsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
@@ -148,13 +148,13 @@ var FirebaseProvider = /** @class */ (function () {
     function FirebaseProvider(afd) {
         this.afd = afd;
     }
-    FirebaseProvider.prototype.getTopics = function () {
+    FirebaseProvider.prototype.getItems = function () {
         return this.afd.list('/topics/');
     };
-    FirebaseProvider.prototype.addTopic = function (name) {
+    FirebaseProvider.prototype.addItem = function (name) {
         this.afd.list('/topics/').push(name);
     };
-    FirebaseProvider.prototype.removeTopic = function (id) {
+    FirebaseProvider.prototype.removeItem = function (id) {
         this.afd.list('/topics/').remove(id);
     };
     FirebaseProvider = __decorate([
