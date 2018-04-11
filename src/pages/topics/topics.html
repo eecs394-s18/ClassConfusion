@@ -6,9 +6,26 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
-<p>
-	This is where we will have the topics and sliders or comment boxes for people to add topics and rate them.
-
+<ion-content>
+  <ion-row>
+    <ion-col col-9>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="newTopic" placeholder="New Topic"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <button ion-button (click)="addTopic()">Add!</button>
+    </ion-col>
+  </ion-row>
+ 
+  <ion-list>
+    <ion-item-sliding *ngFor="let topic of topicList | async">
+      <ion-item>
+        {{ topic.$value }}
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="danger" icon-only (click)="removeTopic(topic.$key)"><ion-icon name="trash"></ion-icon></button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
