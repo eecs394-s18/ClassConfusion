@@ -274,10 +274,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var HomePage = /** @class */ (function () {
     function HomePage(navCtrl) {
         this.navCtrl = navCtrl;
+        this.items = [
+            'EECS 348',
+            'EECS 394',
+            'EECS 330',
+            'EECS 101'
+        ];
     }
+    HomePage.prototype.itemSelected = function (item) {
+        console.log("Selected Item", item);
+    };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/ilhamnurjadin/Google Drive/Academics/Year 3/3. Spring Quarter/EECS 394/class_confusion/ClassConfusion/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>ClassConfusion</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h2>Welcome to ClassConfusion!</h2>\n  <p>\n    You are currently enrolled in the following classes which are using ClassConfusion: (list of classes to click on/add a new class option)\n  </p>\n\n  \n\n</ion-content>\n'/*ion-inline-end:"/Users/ilhamnurjadin/Google Drive/Academics/Year 3/3. Spring Quarter/EECS 394/class_confusion/ClassConfusion/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/ilhamnurjadin/Google Drive/Academics/Year 3/3. Spring Quarter/EECS 394/class_confusion/ClassConfusion/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>ClassConfusion</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n      <h2>Welcome to ClassConfusion!</h2>\n      <p>\n        You are currently enrolled in the following classes which are using ClassConfusion: (list of classes to click on/add a new class option)\n      </p>\n    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">\n        {{ item }}\n    </button> \n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/ilhamnurjadin/Google Drive/Academics/Year 3/3. Spring Quarter/EECS 394/class_confusion/ClassConfusion/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], HomePage);
@@ -315,16 +324,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_results_results__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabs_tabs__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_class_list_class_list__ = __webpack_require__(456);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__ = __webpack_require__(200);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -346,7 +353,6 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_5__pages_results_results__["a" /* ResultsPage */],
                 __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_tabs_tabs__["a" /* TabsPage */],
-                __WEBPACK_IMPORTED_MODULE_8__components_class_list_class_list__["a" /* ClassListComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
@@ -361,11 +367,10 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_5__pages_results_results__["a" /* ResultsPage */],
                 __WEBPACK_IMPORTED_MODULE_6__pages_home_home__["a" /* HomePage */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_tabs_tabs__["a" /* TabsPage */],
-                __WEBPACK_IMPORTED_MODULE_8__components_class_list_class_list__["a" /* ClassListComponent */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */],
-                __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] }
             ]
         })
@@ -689,49 +694,6 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 437;
-
-/***/ }),
-
-/***/ 456:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassListComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-/**
- * Generated class for the ClassListComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
-var ClassListComponent = /** @class */ (function () {
-    function ClassListComponent() {
-        this.items = [
-            'EECS 348',
-            'EECS 394',
-            'EECS 330',
-            'EECS 101'
-        ];
-    }
-    ClassListComponent.prototype.itemSelected = function (item) {
-        console.log("Selected Item", item);
-    };
-    ClassListComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'class-list',template:/*ion-inline-start:"/Users/ilhamnurjadin/Google Drive/Academics/Year 3/3. Spring Quarter/EECS 394/class_confusion/ClassConfusion/src/components/class-list/class-list.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Lists</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">\n      {{ item }}\n    </button>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/ilhamnurjadin/Google Drive/Academics/Year 3/3. Spring Quarter/EECS 394/class_confusion/ClassConfusion/src/components/class-list/class-list.html"*/
-        })
-    ], ClassListComponent);
-    return ClassListComponent;
-}());
-
-//# sourceMappingURL=class-list.js.map
 
 /***/ })
 
