@@ -1,2 +1,14 @@
-.DS_Store
 node_modules
+www
+.idea
+.temp
+.sass-cache
+coverage
+platforms
+plugins
+*.swp
+*.swo
+*.log
+*.DS_Store
+
+app/scripts/configuration.js
