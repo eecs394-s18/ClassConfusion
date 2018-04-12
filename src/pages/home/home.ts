@@ -27,7 +27,6 @@
 
 import { Component } from '@angular/core';
 import { CourseProvider } from './../../providers/course/course';
-// import { HttpClient } from '@angular/common/http';
 
 import {
   FormGroup,
@@ -47,7 +46,7 @@ export class HomePage {
 
   constructor(public courseService: CourseProvider) {
     this.courseForm = new FormGroup({
-      "courses": new FormControl({value: 'EECS 336', disabled: false})
+      "courses": new FormControl({value: 'EECS 394', disabled: false})
     });
   }
 

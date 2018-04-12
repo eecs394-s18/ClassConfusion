@@ -2,6 +2,7 @@ import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { FirebaseListObservable } from 'angularfire2/database-deprecated';
+import { CourseProvider } from './../../providers/course/course';
 
 @Component({
   selector: 'page-topics',
@@ -11,8 +12,9 @@ import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 export class TopicsPage {
   topicList: FirebaseListObservable<any[]>;
   newTopic = '';
+  currentTopic = '';
 
-  constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider) {
+  constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public courseService: CourseProvider) {
     this.topicList = this.firebaseProvider.getTopics();
     // get all topics from firebase for testing purposes:
     // this.firebaseProvider.getTopics().subscribe(snapshots =>
@@ -21,6 +23,8 @@ export class TopicsPage {
     //       // console.log(snapshot);
     //   });
     // });
+
+    this.currentTopic = courseService.currentCourse;
   }
 
   addTopic() {
