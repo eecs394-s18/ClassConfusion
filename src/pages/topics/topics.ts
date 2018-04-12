@@ -4,7 +4,6 @@ import { NavController } from 'ionic-angular';
 import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { AlertController } from 'ionic-angular';
 import { FirebaseApp } from 'angularfire2';
-import { CourseProvider } from './../../providers/course/course';
 
 
 @Component({
@@ -15,11 +14,10 @@ import { CourseProvider } from './../../providers/course/course';
 export class TopicsPage {
   topicList: FirebaseListObservable<any[]>;
   newTopic = '';
-  currentCourse = '';
 
-  constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public courseService: CourseProvider,  public alertCtrl: AlertController, private fbApp: FirebaseApp) {
+  constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public alertCtrl: AlertController, private fbApp: FirebaseApp) {
     this.topicList = this.firebaseProvider.getTopics();
-    this.currentCourse = courseService.currentCourse;
+
   }
 
   addTopic() {
