@@ -15,6 +15,7 @@ import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFireModule } from 'angularfire2';
 import { FirebaseProvider } from './../providers/firebase/firebase';
+import { CourseProvider } from '../providers/course/course';
 
 var firebaseConfig = {
     apiKey: "AIzaSyAumOiHzaCRwzVbAU8HqmTVrBJRN3eUF0I",
@@ -53,6 +54,7 @@ var firebaseConfig = {
     SplashScreen,
     FirebaseProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CourseProvider,
   ]
 })
 export class AppModule {}
