@@ -11,11 +11,11 @@ export class ResultsPage {
 
     @ViewChild('barCanvas') barCanvas;
     @ViewChild('doughnutCanvas') doughnutCanvas;
-    @ViewChild('lineCanvas') lineCanvas;
 
+
+    barChart2: any;
     barChart: any;
     doughnutChart: any;
-    lineChart: any;
 
     constructor(public navCtrl: NavController) {
 
@@ -27,102 +27,109 @@ export class ResultsPage {
 
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+                labels: ["Graph Theory", "DP", "Data Structures", "Systems", "Binary"],
+                datasets: [
+
+                {
+                    label: 'Did Understand',
+                    data: [14, 1, 8, 5, 10],
+                    backgroundColor: ['#D6E9C6', '#D6E9C6', '#D6E9C6', '#D6E9C6', '#D6E9C6']//[
+                        // 'rgba(255, 99, 132, 0.2)',
+                        // 'rgba(54, 162, 235, 0.2)',
+                        // 'rgba(255, 206, 86, 0.2)',
+                        // 'rgba(75, 192, 192, 0.2)',
+                        // 'rgba(153, 102, 255, 0.2)'
+                    //],
+                    // borderColor: [
+                    //     'rgba(255,99,132,1)',
+                    //     'rgba(54, 162, 235, 1)',
+                    //     'rgba(255, 206, 86, 1)',
+                    //     'rgba(75, 192, 192, 1)',
+                    //     'rgba(153, 102, 255, 1)'
+                    // ],
+                    // borderWidth: 1
+                },
+
+                {
+                    label: 'Did not Understand',
+                    data: [4, 17, 10, 13, 8],
+                    backgroundColor: ['#EBCCD1', '#EBCCD1', '#EBCCD1', '#EBCCD1', '#EBCCD1'] // red, //[
+                    //     'rgba(255, 99, 132, 0.2)',
+                    //     'rgba(54, 162, 235, 0.2)',
+                    //     'rgba(255, 206, 86, 0.2)',
+                    //     'rgba(75, 192, 192, 0.2)',
+                    //     'rgba(153, 102, 255, 0.2)'
+                    // ],
+                    // borderColor: [
+                    //     'rgba(255,99,132,1)',
+                    //     'rgba(54, 162, 235, 1)',
+                    //     'rgba(255, 206, 86, 1)',
+                    //     'rgba(75, 192, 192, 1)',
+                    //     'rgba(153, 102, 255, 1)'
+                    // ],
+                    // borderWidth: 1
+                },
+
+
+
+                ]
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
+                    xAxes: [{ stacked: true}],
+                    yAxes: [
+
+                        {
+                        ticks: {beginAtZero:true}, stacked:true
+                        },
+                        // { stacked: true}
+
+                    ]
                 }
             }
 
         });
 
-        this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+        // find which topic was the least understood and send that to the html automatically
+        var lowestUnderstood = Math.max.apply(Math, this.barChart.data.datasets[1].data);
+        console.log(lowestUnderstood);
 
-            type: 'doughnut',
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    hoverBackgroundColor: [
-                        "#FF6384",
-                        "#36A2EB",
-                        "#FFCE56",
-                        "#FF6384",
-                        "#36A2EB",
-                        "#FFCE56"
-                    ]
-                }]
-            }
+        var worstTopicIndex = (this.barChart.data.datasets[1].data).indexOf(lowestUnderstood);
+        var worstTopic = this.barChart.data.labels[worstTopicIndex];
+        console.log(worstTopic)
+        console.log(worstTopicIndex)
 
-        });
+        document.getElementById('WorstTopic').innerHTML = worstTopic;
 
-        this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+        // this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
 
-            type: 'line',
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [
-                    {
-                        label: "My First dataset",
-                        fill: false,
-                        lineTension: 0.1,
-                        backgroundColor: "rgba(75,192,192,0.4)",
-                        borderColor: "rgba(75,192,192,1)",
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: "rgba(75,192,192,1)",
-                        pointBackgroundColor: "#fff",
-                        pointBorderWidth: 1,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                        pointHoverBorderColor: "rgba(220,220,220,1)",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: [65, 59, 80, 81, 56, 55, 40],
-                        spanGaps: false,
-                    }
-                ]
-            }
+        //     type: 'doughnut',
+        //     data: {
+        //         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        //         datasets: [{
+        //             label: '# of Votes',
+        //             data: [12, 19, 3, 5, 2, 3],
+        //             backgroundColor: [
+        //                 'rgba(255, 99, 132, 0.2)',
+        //                 'rgba(54, 162, 235, 0.2)',
+        //                 'rgba(255, 206, 86, 0.2)',
+        //                 'rgba(75, 192, 192, 0.2)',
+        //                 'rgba(153, 102, 255, 0.2)',
+        //                 'rgba(255, 159, 64, 0.2)'
+        //             ],
+        //             hoverBackgroundColor: [
+        //                 "#FF6384",
+        //                 "#36A2EB",
+        //                 "#FFCE56",
+        //                 "#FF6384",
+        //                 "#36A2EB",
+        //                 "#FFCE56"
+        //             ]
+        //         }]
+        //     }
 
-        });
+        // });
+
 
     }
 
