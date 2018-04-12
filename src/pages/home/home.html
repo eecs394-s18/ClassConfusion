@@ -1,14 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>ClassConfusion</ion-title>
+    <ion-title>Courses</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
     <ion-list radio-group [(ngModel)]="course">
-        <h2>Enrolled Courses</h2>
         <p>
-          Select a class from your courses below
+          Select a course from your courses below
         </p>
 
         <!-- <ion-item *ngFor="let item of items" (click)="itemSelected(item)">
@@ -20,9 +19,9 @@
         <form (submit)="doSubmit($event)" [formGroup]="courseForm">
             <ion-list radio-group formControlName="courses">
         
-              <!-- <ion-list-header>
-                Courses
-              </ion-list-header> -->
+              <ion-list-header>
+                Spring 2018
+              </ion-list-header>
         
               <ion-item>
                 <ion-label>EECS 336</ion-label>
