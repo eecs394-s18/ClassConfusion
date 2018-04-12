@@ -1,17 +1,48 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>ClassConfusion</ion-title>
+    <ion-title>Courses</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-list>
-        <h2>Welcome to ClassConfusion!</h2>
-        <p>
-          You are currently enrolled in the following classes which are using ClassConfusion: (list of classes to click on/add a new class option)
-        </p>
-      <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-          {{ item }}
-      </button> 
+  <p>
+    Select one of your courses
+  </p>
+
+  <!-- Old List -->
+  <!-- <ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+          <ion-label>{{item}}</ion-label>
+          <ion-radio value=item *ngIf="item == "></ion-radio>
+        </ion-item> -->
+
+  <!-- Actual List -->
+  <form (ngSubmit)="doSubmit($event)" [formGroup]="courseForm">
+    <ion-list radio-group formControlName="courses">
+      <ion-item>
+        <ion-label>EECS 394</ion-label>
+        <ion-radio value="EECS 394" checked="true"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>EECS 336</ion-label>
+        <ion-radio value="EECS 336"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>EECS 330</ion-label>
+        <ion-radio value="EECS 330"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>EECS 101</ion-label>
+        <ion-radio value="EECS 101"></ion-radio>
+      </ion-item>
+      <!-- <button ion-button type="submit">Submit</button> -->
     </ion-list>
-  </ion-content>
+  </form>
+
+
+  <div text-center>
+    <button ion-button>
+      Enroll in a new class
+    </button>
+  </div>
+
+</ion-content>
