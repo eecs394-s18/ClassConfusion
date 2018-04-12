@@ -26,6 +26,8 @@
 
 
 import { Component } from '@angular/core';
+import { CourseProvider } from './../../providers/course/course';
+// import { HttpClient } from '@angular/common/http';
 
 import {
   FormGroup,
@@ -36,13 +38,14 @@ import {
 
 @Component({
   selector: 'page-home',
+  providers: [ CourseProvider ],
   templateUrl: 'home.html'
 })
 export class HomePage {
   courses;
   courseForm;
 
-  constructor() {
+  constructor(public courseService: CourseProvider) {
     this.courseForm = new FormGroup({
       "courses": new FormControl({value: 'EECS 336', disabled: false})
     });
@@ -50,6 +53,7 @@ export class HomePage {
 
   doSubmit(event) {
     console.log('Submitting form', this.courseForm.value);
+    this.courseService.currentCourse = this.courseForm.value;
     event.preventDefault();
   }
 }

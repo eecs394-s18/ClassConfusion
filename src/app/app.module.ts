@@ -12,10 +12,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFireModule } from 'angularfire2';
 import { FirebaseProvider } from './../providers/firebase/firebase';
-import { CourseProvider } from '../providers/course/course';
+import { CourseProvider } from './../providers/course/course';
 
 var firebaseConfig = {
     apiKey: "AIzaSyAumOiHzaCRwzVbAU8HqmTVrBJRN3eUF0I",
@@ -38,6 +39,7 @@ var firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
+    HttpClientModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig)
   ],
@@ -53,8 +55,8 @@ var firebaseConfig = {
     StatusBar,
     SplashScreen,
     FirebaseProvider,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     CourseProvider,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}
