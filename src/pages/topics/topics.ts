@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { CourseProvider } from './../../providers/course/course';
+import { Observable } from '@firebase/util';
 
 @Component({
   selector: 'page-topics',
