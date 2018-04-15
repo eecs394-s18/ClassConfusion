@@ -30,15 +30,12 @@
         <ion-label>{{topic.name}}</ion-label>
         <ion-checkbox [(ngModel)]="topic.checked" (ionChange)="updateVote(topic);">
         </ion-checkbox>
+        <button ion-button outline item-end icon-only (click)="removeTopic(topic.$key)"><ion-icon name="close"></ion-icon></button>
       </ion-item>
-
-      <ion-item-options side="right">
-        <button ion-button color="danger" icon-only (click)="removeTopic(topic.$key)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-item-options>
-
     </ion-list>
+
+
+
   </ion-list>
 
 

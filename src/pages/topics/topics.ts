@@ -18,7 +18,11 @@ export class TopicsPage {
   newTopic = '';
   // currentCourse = '';
 
-  constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public alertCtrl: AlertController, private fbApp: FirebaseApp) {
+  constructor(
+    public navCtrl: NavController,
+    public firebaseProvider: FirebaseProvider,
+    public alertCtrl: AlertController,
+    private fbApp: FirebaseApp) {
     this.topicList = this.firebaseProvider.getTopics();
 
     // this.currentCourse = courseService.currentCourse;
