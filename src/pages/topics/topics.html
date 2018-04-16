@@ -28,7 +28,9 @@
     <ion-list *ngFor="let topic of topicList | async">
       <ion-item>
         <ion-label>{{topic.name}}</ion-label>
-        <ion-checkbox [(ngModel)]="topic.checked" (ionChange)="updateVote(topic);">
+        <ion-checkbox>
+          [(ngModel)]="topic.checked" 
+          (click)="update(topic)"
         </ion-checkbox>
       </ion-item>
 

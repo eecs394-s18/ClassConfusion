@@ -15,7 +15,7 @@ export class FirebaseProvider {
     this.afd.list('/topics').set(name,
     {
       name: name,
-      voteCount: 1,
+      voteCount: 0,
       commentList: []
     });
   }

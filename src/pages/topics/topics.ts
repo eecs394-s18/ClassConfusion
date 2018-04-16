@@ -25,57 +25,45 @@ export class TopicsPage {
   }
 
   addTopic() {
-    // changing how we check if something already exists in the list
-    // apparently this still doesn't count the voting correctly?
+    var topicsRef = this.fbApp.database().ref('/topics/');
 
-     var topicsRef = this.fbApp.database().ref('/topics/');
-
-        topicsRef.child(this.newTopic).once('value', (snapshot) => {
-          if (snapshot.exists()) {
-            this.presentAlert();
-          }
-          else {
-            this.firebaseProvider.addTopic(this.newTopic);
-          }
-        });
-
+    topicsRef.child(this.newTopic).once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        this.presentAlert();
       }
-
-    // this.firebaseProvider.getTopics().subscribe(snapshots =>
-    // {
-    //   if (this.newTopic.length < 1) { return; }
-    //   let topicNames = [];
-    //   snapshots.forEach(snapshot => {
-    //       topicNames.push(snapshot.name);
-    //   });
-    //   if (topicNames.indexOf(this.newTopic) <= -1)
-    //   {
-    //     this.firebaseProvider.addTopic(this.newTopic);
-    //   }
-    // });
-
+      else {
+        this.firebaseProvider.addTopic(this.newTopic);
+        this.newTopic = ""; // empty out the new topic field
+      }
+    });
+  }
 
   removeTopic(id) {
     this.firebaseProvider.removeTopic(id);
   }
 
-  updateVote(topic) {
-    if (topic.checked)
-    {
-      console.log("Add a vote for " + topic.name);
-    }
-    else
-    {
-      console.log("Remove a vote for " + topic.name);
-    }
+  update(topic) {
+    console.log("update!");
   }
 
+  updateVote(topic, isChecked) {
+    console.log("Name: " + topic.name);
+    console.log("Checked? " + topic.checked);
+    var voteRef = this.fbApp.database().ref('/topics/' + topic.name + '/voteCount');
+    voteRef.transaction((currentCount) => {
+      if (topic.checked)
+      {
+        return currentCount + 1;
+      }
+      return currentCount - 1;
+    });
+  }
 
   presentAlert() {
-  let alert = this.alertCtrl.create({
-    title: 'This item is already in the list!',
-    buttons: ['Dismiss']
-  });
-  alert.present();
-}
+    let alert = this.alertCtrl.create({
+      title: 'This item is already in the list!',
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
 }

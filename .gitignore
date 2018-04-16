@@ -10,6 +10,6 @@ plugins
 *.swo
 *.log
 *.DS_Store
-.sourcemaps
+.sourcemaps/
 
 app/scripts/configuration.js
