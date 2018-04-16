@@ -11,5 +11,6 @@ plugins
 *.log
 *.DS_Store
 .sourcemaps/
+.env
 
 app/scripts/configuration.js
