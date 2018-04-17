@@ -16,18 +16,17 @@ import { FirebaseApp } from 'angularfire2';
 export class TopicsPage {
   topicList: FirebaseListObservable<any[]>;
   newTopic = '';
+  topicsRef: any;
   // currentCourse = '';
 
   constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public alertCtrl: AlertController, private fbApp: FirebaseApp) {
     this.topicList = this.firebaseProvider.getTopics();
-
+    this.topicsRef =  this.fbApp.database().ref('/topics/');
     // this.currentCourse = courseService.currentCourse;
   }
 
   addTopic() {
-    var topicsRef = this.fbApp.database().ref('/topics/');
-
-    topicsRef.child(this.newTopic).once('value', (snapshot) => {
+    this.topicsRef.child(this.newTopic).once('value', (snapshot) => {
       if (snapshot.exists()) {
         this.presentAlert();
       }
@@ -42,20 +41,18 @@ export class TopicsPage {
     this.firebaseProvider.removeTopic(id);
   }
 
-  update(topic) {
-    console.log("update!");
-  }
-
-  updateVote(topic, isChecked) {
-    console.log("Name: " + topic.name);
-    console.log("Checked? " + topic.checked);
-    var voteRef = this.fbApp.database().ref('/topics/' + topic.name + '/voteCount');
-    voteRef.transaction((currentCount) => {
+  updateVote(topic) {
+    var topicRef = this.topicsRef.child(topic.name);
+    topicRef.transaction(function(currentTopic) {
       if (topic.checked)
       {
-        return currentCount + 1;
+        currentTopic.voteCount ++;
       }
-      return currentCount - 1;
+      else
+      {
+        currentTopic.voteCount --;
+      }
+      return currentTopic;
     });
   }
 
