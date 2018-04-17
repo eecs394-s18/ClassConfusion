@@ -28,10 +28,7 @@
     <ion-list *ngFor="let topic of topicList | async">
 
       <ion-item>
-        <ion-label>{{topic.name}}</ion-label>
-        <ion-checkbox (ngChecked)="topic" 
-                      (click)="updateVote(topic)">
-        </ion-checkbox>
+        <button ion-button full outline (click)="updateVote($event)" value="green">{{topic.name}}</button>
       </ion-item>
 
       <ion-item-options side="right">
@@ -42,8 +39,6 @@
 
     </ion-list>
   </ion-list>
-
-
   <br>
 
 

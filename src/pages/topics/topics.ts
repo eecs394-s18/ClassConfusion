@@ -41,19 +41,29 @@ export class TopicsPage {
     this.firebaseProvider.removeTopic(id);
   }
 
-  updateVote(topic) {
-    var topicRef = this.topicsRef.child(topic.name);
-    topicRef.transaction(function(currentTopic) {
-      if (topic.checked)
-      {
-        currentTopic.voteCount ++;
-      }
-      else
-      {
-        currentTopic.voteCount --;
-      }
-      return currentTopic;
-    });
+  updateVote(event) {
+    var currentColor = event.explicitOriginalTarget.value;
+    if (currentColor == "green")
+    {
+      event.explicitOriginalTarget.value = "red";
+    }
+    else
+    {
+      event.explicitOriginalTarget.value = "green";
+    }
+
+    // var topicRef = this.topicsRef.child(topic.name);
+    // topicRef.transaction(function(currentTopic) {
+    //   if (topic.checked)
+    //   {
+    //     currentTopic.voteCount ++;
+    //   }
+    //   else
+    //   {
+    //     currentTopic.voteCount --;
+    //   }
+    //   return currentTopic;
+    // });
   }
 
   presentAlert() {
