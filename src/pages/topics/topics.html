@@ -33,7 +33,7 @@
     <ion-list *ngFor="let topic of topicList">
       <ion-item>
         <ion-label>{{topic.name}}</ion-label>
-        <ion-checkbox [(ngModel)]="changeChecked" (ionChange)="updateVote(topic.name);">
+        <ion-checkbox [(ngModel)]="checkedMap[topic.name]" (ionChange)="updateVote(topic.name);">
         </ion-checkbox>
         <button ion-button item-end clear icon-only (click)="removeTopic(topic.name)" class="butt"><ion-icon name="close"></ion-icon></button>
       </ion-item>

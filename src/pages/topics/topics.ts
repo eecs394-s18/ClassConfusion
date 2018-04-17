@@ -16,13 +16,15 @@ export class TopicsPage {
   newTopic = '';
   topicsRef: any; // Reference that is frequenly used
   ready: boolean = false; // Check if topics are retrieved before loading list of checkboxes
-  changeChecked: boolean = false; // This is the cause of the updateVote issues... swap to use a dictionary with unique change-checking
+
+  checkedMap: Map<string, boolean>; 
 
   // currentCourse = '';
 
   constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public alertCtrl: AlertController, private fbApp: FirebaseApp) {
     this.topicsRef =  this.fbApp.database().ref('/topics/');
     this.getTopics(); // load up the topicList
+    this.checkedMap = new Map([]);
     // this.currentCourse = courseService.currentCourse;
   }
 
@@ -50,24 +52,28 @@ export class TopicsPage {
         this.getTopics();
       }
     });
+
   }
 
   updateVote(topicName) {
+    this.setStatus(topicName);
     var voteChange = 0;
-    if (this.changeChecked) { voteChange = -1; }
-    else { voteChange = 1; }
-    console.log("Update vote for " + topicName + ", is it checked? " + this.changeChecked);
+    if (this.checkedMap.get(topicName)) { voteChange = 1; }
+    else { voteChange = -1; }
     
     var topicRef = this.topicsRef.child(topicName);
     topicRef.transaction(function(currentTopic) {
       currentTopic.voteCount += voteChange;
       return currentTopic;
     });
+
+    this.getTopics();
   }
 
-  removeTopic(id) {
+  removeTopic(name) {
     this.ready = false;
-    this.firebaseProvider.removeTopic(id);
+    this.firebaseProvider.removeTopic(name);
+    this.checkedMap.delete(name);
     this.getTopics();
   }
 
@@ -77,5 +83,19 @@ export class TopicsPage {
       buttons: ['Dismiss']
     });
     alert.present();
+  }
+
+  setStatus(name) {
+    var currentStatus = this.checkedMap.get(name);
+    console.log("Currently: " + currentStatus + "; should become: " + !currentStatus); 
+    if (currentStatus) // If not first time, just flip the status
+    {
+      this.checkedMap.set(name, !currentStatus);
+    }
+    else // First time
+    {
+      this.checkedMap.set(name, true);
+    }
+    console.log(this.checkedMap);
   }
 }
