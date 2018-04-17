@@ -7,26 +7,16 @@ export class FirebaseProvider {
   constructor(public afd: AngularFireDatabase) {
   }
 
-  getTopics() {
-    return this.afd.list('/topics');
-  }
-
   addTopic(name) {
     this.afd.list('/topics').set(name,
     {
       name: name,
-      votes: 0,
+      voteCount: 0,
       commentList: []
     });
   }
 
-  removeTopic(id) {
-    this.afd.list('/topics').remove(id);
-  }
-
-  changeVote(name, newCount) {
-    var topicsRef = this.afd.list('/topics');
-    console.log("Updating " + name + " to have " + newCount + " votes.");
-    topicsRef.update(name, { voteCount: newCount });
+  removeTopic(name) {
+    this.afd.list('/topics').remove(name);
   }
 }
