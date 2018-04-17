@@ -42,17 +42,20 @@ export class TopicsPage {
   }
 
   updateVote(topic) {
-    var voteChange = 0;
+    var newCount = topic.voteCount;
+    console.log(topic.voteCount);
     if (topic.color == "#65f442") // green
     {
       topic.color= "#f44242";
-      voteChange = -1;
+      newCount --;
     }
     else
     {
       topic.color = "#65f442";
-      voteChange = 1;
+      newCount ++;
     }
+
+    this.firebaseProvider.changeVote(topic.name, newCount);
 
     // var topicRef = this.topicsRef.child(topic.name);
     // topicRef.transaction(function(currentTopic) {

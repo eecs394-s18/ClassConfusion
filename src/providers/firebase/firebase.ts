@@ -23,4 +23,10 @@ export class FirebaseProvider {
   removeTopic(id) {
     this.afd.list('/topics').remove(id);
   }
+
+  changeVote(name, newCount) {
+    var topicsRef = this.afd.list('/topics');
+    console.log("Updating " + name + " to have " + newCount + " votes.");
+    topicsRef.update(name, { voteCount: newCount });
+  }
 }
