@@ -25,7 +25,7 @@ export class ResultsPage {
 
         this.barChart = new Chart(this.barCanvas.nativeElement, {
 
-            type: 'bar',
+            type: 'horizontalBar',
             data: {
                 labels: ["Graph Theory", "DP", "Data Structures", "Systems", "Binary"],
                 datasets: [
