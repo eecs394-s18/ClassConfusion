@@ -41,6 +41,7 @@ export class TopicsPage {
   }
 
   addTopic() {
+    if (this.newTopic.length === 0) { return; } // Fix for issue #5
     this.topicsRef.child(this.newTopic).once('value', (snapshot) => {
       if (snapshot.exists()) {
         this.presentAlert();
