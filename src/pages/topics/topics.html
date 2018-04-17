@@ -28,7 +28,10 @@
     <ion-list *ngFor="let topic of topicList | async">
 
       <ion-item>
-        <button ion-button full outline (click)="updateVote($event)" value="green">{{topic.name}}</button>
+        <button ion-button block  (click)="updateVote(topic)" 
+                                  [style.background-color]="topic.color">
+          {{topic.name}}
+        </button>
       </ion-item>
 
       <ion-item-options side="right">

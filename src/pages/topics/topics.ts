@@ -41,27 +41,22 @@ export class TopicsPage {
     this.firebaseProvider.removeTopic(id);
   }
 
-  updateVote(event) {
-    var currentColor = event.explicitOriginalTarget.value;
-    if (currentColor == "green")
+  updateVote(topic) {
+    var voteChange = 0;
+    if (topic.color == "#65f442") // green
     {
-      event.explicitOriginalTarget.value = "red";
+      topic.color= "#f44242";
+      voteChange = -1;
     }
     else
     {
-      event.explicitOriginalTarget.value = "green";
+      topic.color = "#65f442";
+      voteChange = 1;
     }
 
     // var topicRef = this.topicsRef.child(topic.name);
     // topicRef.transaction(function(currentTopic) {
-    //   if (topic.checked)
-    //   {
-    //     currentTopic.voteCount ++;
-    //   }
-    //   else
-    //   {
-    //     currentTopic.voteCount --;
-    //   }
+    //   currentTopic.voteCount += voteChange;
     //   return currentTopic;
     // });
   }
