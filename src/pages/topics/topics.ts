@@ -40,6 +40,7 @@ export class TopicsPage {
           }
           else {
             this.firebaseProvider.addTopic(this.newTopic);
+            this.newTopic = '';
           }
         });
 
