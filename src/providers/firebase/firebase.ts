@@ -19,4 +19,14 @@ export class FirebaseProvider {
   removeTopic(name) {
     this.afd.list('/topics').remove(name);
   }
+
+
+  getTopics() {
+    return this.afd.list('/topics');
+  }
+
+  getVoteCount() {
+    return this.afd.list('/topics/' + name + '/voteCount');
+  }
+
 }
