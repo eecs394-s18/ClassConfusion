@@ -1,10 +1,6 @@
-import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { FirebaseApp } from 'angularfire2';
-// import { ResultsPage } from '../results/results';
-// import { CourseProvider } from './../../providers/course/course';
 
 @Component({
   selector: 'page-topics',
@@ -13,31 +9,34 @@ import { FirebaseApp } from 'angularfire2';
 
 export class TopicsPage {
   topicList: Array<any> = [];
-  newTopic = '';
-  topicsRef: any; // Reference that is frequenly used
-  ready: boolean = false; // Check if topics are retrieved before loading list of checkboxes
+  topicsRef: any; // Reference to all of the topics
+  ready: boolean = false; // Check if topicList is ready to be rendered
+  newTopic: string = '';
 
   checkedMap: Map<string, boolean>;
 
-  // currentCourse = '';
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, private fbApp: FirebaseApp) {
 
-  constructor(public navCtrl: NavController, public firebaseProvider: FirebaseProvider, public alertCtrl: AlertController, private fbApp: FirebaseApp) {
+    // // These variables should be ~provided~ from elsewhere
+    // var courseName = ""; // Format here would be 'eecs330/'
+    // var currentLecture = ""; // Format here would be 'lecture01'
+
     this.topicsRef =  this.fbApp.database().ref('/topics/');
+
     this.getTopics(); // load up the topicList
     this.checkedMap = new Map([]);
-    // this.currentCourse = courseService.currentCourse;
   }
 
   getTopics() {
-    this.ready = false;
-    this.topicList = []; // this doesn't work - wipe to prevent duplicates from appearing
+    this.ready = false; // Stop showing the list on page
+    this.topicList = []; // Wipe out the list of topics to be replaced
     this.topicsRef.on('value', (snapshot) => {
       snapshot.forEach((child) => {
-        this.topicList.push(child.val());
+        this.topicList.push(child.val()); // Add topics by name
       });
     });
     console.log("[Alert] Retrieved topics from Firebase.");
-    this.ready = true; // Now ready to display...
+    this.ready = true; // List is now ready to display
   }
 
   addTopic() {
@@ -47,35 +46,44 @@ export class TopicsPage {
         this.presentAlert();
       }
       else {
-        this.ready = false;
-        this.firebaseProvider.addTopic(this.newTopic);
-        this.newTopic = ""; // empty out the new topic field
-        this.getTopics();
+        this.topicsRef.child(this.newTopic); // Create new child...
+        this.topicsRef.child(this.newTopic).set(
+        {
+          name: this.newTopic,
+          voteCount: 0,
+        }); // Add our new topic data to the child
+        this.newTopic = ""; // Empty out the new topic field
+        this.getTopics(); // Reload the topicList
       }
     });
 
   }
 
   updateVote(topicName) {
-    this.setStatus(topicName);
+    this.setStatus(topicName); // Use setStatus helper method to flip checked status in the Map
+    // Logic to decide how much to change the vote count by
     var voteChange = 0;
     if (this.checkedMap.get(topicName)) { voteChange = 1; }
     else { voteChange = -1; }
 
     var topicRef = this.topicsRef.child(topicName);
-    topicRef.transaction(function(currentTopic) {
-      currentTopic.voteCount += voteChange;
-      return currentTopic;
+    // Change voteCount using transaction; modify object then returning it (thus locking in the transaction)
+    topicRef.transaction((selected) => {
+      selected.voteCount += voteChange;
+      return selected;
     });
 
     this.getTopics();
   }
 
   removeTopic(name) {
-    this.ready = false;
-    this.firebaseProvider.removeTopic(name);
-    this.checkedMap.delete(name);
-    this.getTopics();
+    var topicRef = this.topicsRef.child(name);
+    if (topicRef)
+    {
+      this.topicsRef.child(name).remove(); // Remove child from the database
+      this.checkedMap.delete(name); // Remove topic from our Map
+    }
+    this.getTopics(); // Reload the topicList
   }
 
   presentAlert() {
@@ -88,7 +96,6 @@ export class TopicsPage {
 
   setStatus(name) {
     var currentStatus = this.checkedMap.get(name);
-    console.log("Currently: " + currentStatus + "; should become: " + !currentStatus);
     if (currentStatus) // If not first time, just flip the status
     {
       this.checkedMap.set(name, !currentStatus);
@@ -97,6 +104,5 @@ export class TopicsPage {
     {
       this.checkedMap.set(name, true);
     }
-    console.log(this.checkedMap);
   }
 }
