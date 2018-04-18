@@ -17,7 +17,7 @@ export class TopicsPage {
   topicsRef: any; // Reference that is frequenly used
   ready: boolean = false; // Check if topics are retrieved before loading list of checkboxes
 
-  checkedMap: Map<string, boolean>; 
+  checkedMap: Map<string, boolean>;
 
   // currentCourse = '';
 
@@ -30,7 +30,7 @@ export class TopicsPage {
 
   getTopics() {
     this.ready = false;
-    this.topicList = []; // wipe to prevent duplicates from appearing
+    this.topicList = []; // this doesn't work - wipe to prevent duplicates from appearing
     this.topicsRef.on('value', (snapshot) => {
       snapshot.forEach((child) => {
         this.topicList.push(child.val());
@@ -61,7 +61,7 @@ export class TopicsPage {
     var voteChange = 0;
     if (this.checkedMap.get(topicName)) { voteChange = 1; }
     else { voteChange = -1; }
-    
+
     var topicRef = this.topicsRef.child(topicName);
     topicRef.transaction(function(currentTopic) {
       currentTopic.voteCount += voteChange;
@@ -88,7 +88,7 @@ export class TopicsPage {
 
   setStatus(name) {
     var currentStatus = this.checkedMap.get(name);
-    console.log("Currently: " + currentStatus + "; should become: " + !currentStatus); 
+    console.log("Currently: " + currentStatus + "; should become: " + !currentStatus);
     if (currentStatus) // If not first time, just flip the status
     {
       this.checkedMap.set(name, !currentStatus);
