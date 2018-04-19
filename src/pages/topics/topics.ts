@@ -27,6 +27,10 @@ export class TopicsPage {
     this.checkedMap = new Map([]);
   }
 
+  /**
+    Topic features
+  **/
+
   getTopics() {
     this.ready = false; // Stop showing the list on page
     this.topicList = []; // Wipe out the list of topics to be replaced
@@ -59,6 +63,24 @@ export class TopicsPage {
 
   }
 
+  editTopic(name) {
+    console.log("Edit topic " + name);
+  }
+
+  removeTopic(name) {
+    var topicRef = this.topicsRef.child(name);
+    if (topicRef)
+    {
+      this.topicsRef.child(name).remove(); // Remove child from the database
+      this.checkedMap.delete(name); // Remove topic from our Map
+    }
+    this.getTopics(); // Reload the topicList
+  }
+
+  /**
+    Voting features
+  **/
+
   updateVote(topicName) {
     this.setStatus(topicName); // Use setStatus helper method to flip checked status in the Map
     // Logic to decide how much to change the vote count by
@@ -76,24 +98,6 @@ export class TopicsPage {
     this.getTopics();
   }
 
-  removeTopic(name) {
-    var topicRef = this.topicsRef.child(name);
-    if (topicRef)
-    {
-      this.topicsRef.child(name).remove(); // Remove child from the database
-      this.checkedMap.delete(name); // Remove topic from our Map
-    }
-    this.getTopics(); // Reload the topicList
-  }
-
-  presentAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'This item is already in the list!',
-      buttons: ['Dismiss']
-    });
-    alert.present();
-  }
-
   setStatus(name) {
     var currentStatus = this.checkedMap.get(name);
     if (currentStatus) // If not first time, just flip the status
@@ -104,5 +108,13 @@ export class TopicsPage {
     {
       this.checkedMap.set(name, true);
     }
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'This item is already in the list!',
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }
