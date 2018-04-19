@@ -1,9 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { FirebaseApp } from 'angularfire2';
-import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 
 // so, this gets actual topics and votes now, but it doesn't update automatically when the topic page
 // both gets a new topic and gets a new vote.
