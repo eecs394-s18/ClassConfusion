@@ -35,12 +35,12 @@
         <ion-label>{{topic.name}}</ion-label>
         <ion-checkbox [(ngModel)]="checkedMap[topic.name]" (ionChange)="updateVote(topic.name);">
         </ion-checkbox>
-        
-        <button ion-button item-end clear icon-only (click)="editTopic(topic.name)" class="butt" style="padding-right:10px">
+
+        <button ion-button item-end clear icon-only (click)="editTopic(topic.name)" class="butt" style="padding:10px">
           <ion-icon name="create"></ion-icon>
         </button>
 
-        <button ion-button item-end clear icon-only (click)="removeTopic(topic.name)" class="butt">
+        <button ion-button item-end clear icon-only (click)="removeTopic(topic.name)" class="butt" style="padding:10px">
           <ion-icon name="close"></ion-icon>
         </button>
 

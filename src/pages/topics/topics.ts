@@ -47,7 +47,7 @@ export class TopicsPage {
     if (this.newTopic.length === 0) { return; } // Fix for issue #5
     this.topicsRef.child(this.newTopic).once('value', (snapshot) => {
       if (snapshot.exists()) {
-        this.presentAlert();
+        this.presentDuplicateAlert();
       }
       else {
         this.topicsRef.child(this.newTopic); // Create new child...
@@ -60,11 +60,85 @@ export class TopicsPage {
         this.getTopics(); // Reload the topicList
       }
     });
-
   }
 
-  editTopic(name) {
+  addSpecificTopic(name, votes) {
+    if (name.length === 0) { return; } 
+    if (votes <= 1) { votes = 0 }
+    this.topicsRef.child(name).once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        this.presentDuplicateAlert();
+      }
+      else {
+        this.topicsRef.child(name); // Create new child...
+        this.topicsRef.child(name).set(
+        {
+          name: name,
+          voteCount: votes,
+        });
+        this.getTopics(); // Reload the topicList
+      }
+    });
+  }
+
+  editTopic(oldName) {
     console.log("Edit topic " + name);
+    let alert = this.alertCtrl.create({
+      title: 'Change Topic',
+      inputs: [
+        {
+          name: 'newName',
+          placeholder: oldName
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: data => {
+            if (data.newName) // Something was entered
+            {
+              this.topicsRef.child(data.newName).once('value', (snapshot) => {
+                if (snapshot.exists()) // Duplicate name; do nothing
+                {
+                  this.presentDuplicateAlert();
+                }
+                else 
+                {
+                  // Update the name here
+                  this.getTopics(); // Reload the topicList
+                  var child = this.topicsRef.child(oldName);
+                  child.once('value', (snapshot) => {
+                    var votes = snapshot.val().voteCount;
+                    this.removeTopic(oldName);
+                    // Update map, if was checked remove vote in the next line
+                    // DO THIS HERE
+                    this.addSpecificTopic(data.newName, votes);
+                    this.getTopics();
+                  });
+                }
+              });
+            }
+            else // Nothing entered ; do nothing
+            {
+              let noChangeAlert = this.alertCtrl.create({
+                title: 'No topic name entered!',
+                subTitle: 'Please try again.',
+                buttons: ['Dismiss']
+              });
+              noChangeAlert.present();
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   removeTopic(name) {
@@ -110,9 +184,10 @@ export class TopicsPage {
     }
   }
 
-  presentAlert() {
+  presentDuplicateAlert() {
     let alert = this.alertCtrl.create({
       title: 'This item is already in the list!',
+      subTitle: 'Please try again.',
       buttons: ['Dismiss']
     });
     alert.present();
